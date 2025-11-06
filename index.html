@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Comprehensive cancer awareness resource with prevention tips, types of cancer, causes, and support resources.">
+    <title>Cancer Awareness — Learn · Prevent · Protect · Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f7fafc;
+            --card: #ffffff;
+            --accent: #1f8a70;
+            --accent-light: #e1f5f0;
+            --danger: #d9534f;
+            --warning: #f0ad4e;
+            --safe: #5cb85c;
+            --muted: #6b7280;
+            --text: #111;
+            font-family: "Poppins", system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #146e58;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* HEADER - STRAIGHT NAVBAR */
+        header.site-header {
+            background: var(--card);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: .8rem 1rem;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+        }
+
+        .tag {
+            margin: 0;
+            color: var(--muted);
+            font-size: .95rem;
+        }
+
+        nav.main-nav {
+            display: flex;
+            background: var(--accent-light);
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        nav.main-nav a {
+            padding: 0.5rem 1rem;
+            margin: 0;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            color: var(--accent);
+        }
+
+        nav.main-nav a:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* HERO */
+        .hero {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 10px rgba(0, 0, 0, .05);
+            animation: fadeInUp .8s ease-out;
+        }
+
+        .hero h2 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .hero img {
+            max-width: 350px;
+        }
+
+        /* GRID & CARD */
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .types {
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        }
+
+        .card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .05);
+            transition: transform .3s ease, box-shadow .3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            cursor: pointer;
+            border-left: 4px solid var(--accent-light);
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .card ul {
+            padding-left: 1.2rem;
+        }
+
+        .card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* SEARCH BAR */
+        #search-bar {
+            width: 100%;
+            padding: .6rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin: 1rem 0;
+            outline-color: var(--accent);
+        }
+
+        /* STATS */
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 200px;
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 0;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* IMPORTANT NOTE */
+        .important-note {
+            background-color: var(--accent-light);
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .important-note h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* SYMPTOMS */
+        .symptoms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .symptom-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .05);
+        }
+
+        .symptom-card h4 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* CARCINOGENIC MATERIALS SECTION */
+        .carcinogen-section {
+            margin-top: 2rem;
+        }
+
+        .carcinogen-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .05);
+            margin-bottom: 1.5rem;
+        }
+
+        .carcinogen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .carcinogen-name {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+
+        .risk-level {
+            font-weight: 600;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .risk-high {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+
+        .risk-medium {
+            background-color: #fff3e0;
+            color: var(--warning);
+        }
+
+        .risk-low {
+            background-color: #e8f5e9;
+            color: var(--safe);
+        }
+
+        .safety-bar-container {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .safety-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s ease;
+        }
+
+        .bar-high {
+            background-color: var(--danger);
+            width: 90%;
+        }
+
+        .bar-medium {
+            background-color: var(--warning);
+            width: 60%;
+        }
+
+        .bar-low {
+            background-color: var(--safe);
+            width: 30%;
+        }
+
+        .safety-tips {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--accent-light);
+            border-radius: 8px;
+        }
+
+        .safety-tips h4 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* SUPPORT SECTION */
+        .support-section {
+            background: var(--accent-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        footer.site-footer {
+            background: #fff;
+            padding: 1rem 0;
+            color: var(--muted);
+            font-size: .9rem;
+            text-align: center;
+            box-shadow: 0 -1px 6px rgba(0, 0, 0, .05);
+            margin-top: 1.5rem;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === FIX: make anchor scroll stop below header === */
+        :target {
+            scroll-margin-top: 120px;
+            /* adjust based on header height */
+        }
+
+        @media (max-width: 750px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav.main-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+
+            .carcinogen-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .risk-level {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="wrap header-inner">
+            <div class="brand">
+                <div class="logo">🩺</div>
+                <div>
+                    <h1 style="margin: .1rem 0; font-size: 1.1rem;">Cancer Awareness</h1>
+                    <p class="tag">Learn · Prevent · Protect · Support</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="#what">What is Cancer</a>
+                <a href="#types">Cancer Types</a>
+                <a href="#symptoms">Symptoms</a>
+                <a href="#causes">Causes</a>
+                <a href="#carcinogens">Carcinogens</a>
+                <a href="#prevention">Prevention</a>
+                <a href="#resources">Resources</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+
+        <section id="what" class="hero">
+            <div style="flex:1">
+                <h2>Understanding Cancer</h2>
+                <p>
+                    Cancer is a complex group of diseases characterized by the uncontrolled growth and spread of abnormal cells. These cells can form tumors, invade nearby tissues, and spread to other parts of the body through the blood and lymph systems (a process called metastasis).
+                </p>
+                <p>
+                    Cancer can start in almost any tissue or organ of the body. While not all tumors are cancerous (malignant), malignant tumors can invade and destroy healthy tissues. Early detection through screening and adopting healthy lifestyle habits significantly improve survival rates and quality of life.
+                </p>
+                <p style="color:var(--accent);font-weight:600;">Knowledge, awareness, and regular screening save lives.</p>
+            </div>
+            <div>
+                <img src="./cancer-cell.jpg"
+                    alt="Cancer cells under microscope">
+            </div>
+        </section>
+
+        <div class="stats">
+            <div class="stat-card">
+                <p class="stat-number">40%</p>
+                <p class="stat-label">of cancers are preventable</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">70%</p>
+                <p class="stat-label">of cancer deaths occur in low-to-middle income countries</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">9.6M</p>
+                <p class="stat-label">people die from cancer each year</p>
+            </div>
+        </div>
+
+        <!-- TYPES SECTION -->
+        <section id="types" style="margin-top:2rem">
+            <h2>Types of Cancer</h2>
+            <p>Cancers are typically named for the organs or tissues where they form. Here are some of the most common types:</p>
+            
+            <div class="important-note">
+                <h3>Important Note</h3>
+                <p>This list provides general information about cancer types. If you have concerns about any symptoms or risk factors, please consult with a healthcare professional for personalized medical advice.</p>
+            </div>
+            
+            <div class="types grid" style="margin-top:1rem">
+
+                <article class="card">
+                    <h3>Breast Cancer</h3>
+                    <p>Develops in breast tissue, most commonly in the ducts that carry milk to the nipple or the glands that produce milk. Includes invasive ductal carcinoma, invasive lobular carcinoma, and inflammatory breast cancer.</p>
+                </article>
+                <article class="card">
+                    <h3>Lung Cancer</h3>
+                    <p>Begins in the lungs and is strongly linked to smoking. The two main types are non-small cell lung cancer (more common) and small cell lung cancer (more aggressive).</p>
+                </article>
+                <article class="card">
+                    <h3>Prostate Cancer</h3>
+                    <p>Develops in the prostate gland in men. It's often slow-growing but can be aggressive in some cases. Regular screening is important for early detection.</p>
+                </article>
+                <article class="card">
+                    <h3>Colorectal Cancer</h3>
+                    <p>Starts in the colon or rectum, often developing from precancerous polyps. Screening tests can find and remove polyps before they become cancerous.</p>
+                </article>
+                <article class="card">
+                    <h3>Skin Cancer</h3>
+                    <p>The most common type of cancer. Includes basal cell carcinoma, squamous cell carcinoma, and melanoma (the most dangerous form).</p>
+                </article>
+                <article class="card">
+                    <h3>Blood Cancers</h3>
+                    <p>Includes leukemia (cancer of blood-forming tissues), lymphoma (lymph system cancer), and multiple myeloma (plasma cell cancer).</p>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- SYMPTOMS SECTION -->
+        <section id="symptoms" style="margin-top:2rem">
+            <h2>Common Cancer Symptoms</h2>
+            <p>While these symptoms can be caused by conditions other than cancer, it's important to consult a healthcare professional if you experience any persistent or unusual changes in your body.</p>
+            
+            <div class="symptoms-grid" style="margin-top:1rem">
+                <div class="symptom-card">
+                    <h4>Unexplained Weight Loss</h4>
+                    <p>Losing 10 pounds or more without trying could be a sign of various cancers, especially those of the pancreas, stomach, esophagus, or lung.</p>
+                </div>
+                <div class="symptom-card">
+                    <h4>Fatigue</h4>
+                    <p>Extreme tiredness that doesn't improve with rest can be an early sign of some cancers, like leukemia or cancers that cause blood loss.</p>
+                </div>
+                <div class="symptom-card">
+                    <h4>Persistent Pain</h4>
+                    <p>Ongoing pain without a clear cause that doesn't go away may signal bone, brain, or other cancers.</p>
+                </div>
+                <div class="symptom-card">
+                    <h4>Skin Changes</h4>
+                    <p>Any changes in size, shape, or color of moles or other skin spots, or new skin growths should be examined.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAUSES -->
+        <section id="causes" style="margin-top:2rem">
+            <h2>Causes and Risk Factors</h2>
+            <p>Cancer develops due to changes (mutations) in DNA that control cell function. These changes can be inherited or caused by exposure to carcinogens. Search below to filter causes or keywords like "tobacco", "alcohol", "radiation", etc.</p>
+            
+            <input type="search" id="search-bar" placeholder="🔍 Search cancer causes...">
+            <div class="grid" id="causes-grid"
+                style="margin-top:1rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+                <article class="card">
+                    <h3>Tobacco Use</h3>
+                    <p>The leading preventable cause of cancer worldwide. Smoking causes lung, throat, mouth, pancreatic, bladder, and many other cancers. Avoid all forms of tobacco and secondhand smoke.</p>
+                </article>
+                <article class="card">
+                    <h3>Alcohol Consumption</h3>
+                    <p>Linked to breast, liver, colorectal, esophageal, and head and neck cancers. The risk increases with the amount consumed. Limit alcohol intake or avoid it completely.</p>
+                </article>
+                <article class="card">
+                    <h3>UV Radiation</h3>
+                    <p>Excessive exposure to ultraviolet radiation from the sun or tanning beds significantly increases skin cancer risk. Use SPF 30+ sunscreen, wear protective clothing, and avoid peak sun hours.</p>
+                </article>
+                <article class="card">
+                    <h3>Unhealthy Diet</h3>
+                    <p>Diets high in processed meats, red meat, and low in fruits and vegetables may increase cancer risk. Focus on a balanced diet rich in plant-based foods.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- CARCINOGENIC MATERIALS SECTION -->
+        <section id="carcinogens" class="carcinogen-section">
+            <h2>Carcinogenic Materials & Safety Levels</h2>
+            <p>Understanding the carcinogenic potential of common materials can help you make safer choices. The bars below represent relative risk levels based on scientific evidence.</p>
+            
+            <div class="important-note">
+                <h3>Understanding Risk Levels</h3>
+                <p>Risk levels are based on the International Agency for Research on Cancer (IARC) classifications and represent the strength of evidence linking a substance to cancer, not necessarily the level of risk in everyday exposure. Always follow safety guidelines for any potentially hazardous materials.</p>
+            </div>
+            
+            <div class="carcinogen-card">
+                <div class="carcinogen-header">
+                    <h3 class="carcinogen-name">Tobacco Smoke</h3>
+                    <span class="risk-level risk-high">High Risk</span>
+                </div>
+                <p>Contains at least 70 known carcinogens. Directly linked to lung, throat, mouth, and many other cancers.</p>
+                <div class="safety-bar-container">
+                    <div class="safety-bar bar-high"></div>
+                </div>
+                <div class="safety-tips">
+                    <h4>Safety Recommendations:</h4>
+                    <ul>
+                        <li>Avoid all tobacco products</li>
+                        <li>Stay away from secondhand smoke</li>
+                        <li>Seek help to quit if you currently smoke</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="carcinogen-card">
+                <div class="carcinogen-header">
+                    <h3 class="carcinogen-name">Asbestos</h3>
+                    <span class="risk-level risk-high">High Risk</span>
+                </div>
+                <p>Once widely used in construction. Inhalation of fibers can cause mesothelioma and lung cancer.</p>
+                <div class="safety-bar-container">
+                    <div class="safety-bar bar-high"></div>
+                </div>
+                <div class="safety-tips">
+                    <h4>Safety Recommendations:</h4>
+                    <ul>
+                        <li>Leave asbestos removal to professionals</li>
+                        <li>Use proper respiratory protection if exposure is possible</li>
+                        <li>Be aware of asbestos in older buildings</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="carcinogen-card">
+                <div class="carcinogen-header">
+                    <h3 class="carcinogen-name">Processed Meats</h3>
+                    <span class="risk-level risk-medium">Medium Risk</span>
+                </div>
+                <p>Classified as Group 1 carcinogen by IARC. Regular consumption increases colorectal cancer risk.</p>
+                <div class="safety-bar-container">
+                    <div class="safety-bar bar-medium"></div>
+                </div>
+                <div class="safety-tips">
+                    <h4>Safety Recommendations:</h4>
+                    <ul>
+                        <li>Limit consumption of processed meats</li>
+                        <li>Choose fresh alternatives when possible</li>
+                        <li>Balance diet with plenty of fruits and vegetables</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="carcinogen-card">
+                <div class="carcinogen-header">
+                    <h3 class="carcinogen-name">Alcohol</h3>
+                    <span class="risk-level risk-medium">Medium Risk</span>
+                </div>
+                <p>Classified as Group 1 carcinogen. Risk increases with amount consumed.</p>
+                <div class="safety-bar-container">
+                    <div class="safety-bar bar-medium"></div>
+                </div>
+                <div class="safety-tips">
+                    <h4>Safety Recommendations:</h4>
+                    <ul>
+                        <li>Follow recommended limits (1 drink/day for women, 2 for men)</li>
+                        <li>Consider alcohol-free days each week</li>
+                        <li>Be aware of increased breast cancer risk with alcohol consumption</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="carcinogen-card">
+                <div class="carcinogen-header">
+                    <h3 class="carcinogen-name">BPA (Bisphenol A)</h3>
+                    <span class="risk-level risk-low">Low Risk</span>
+                </div>
+                <p>Found in some plastics and food can linings. Potential endocrine disruptor with limited evidence of carcinogenicity.</p>
+                <div class="safety-bar-container">
+                    <div class="safety-bar bar-low"></div>
+                </div>
+                <div class="safety-tips">
+                    <h4>Safety Recommendations:</h4>
+                    <ul>
+                        <li>Choose BPA-free products when possible</li>
+                        <li>Avoid heating plastic containers</li>
+                        <li>Use glass or stainless steel for food storage</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="carcinogen-card">
+                <div class="carcinogen-header">
+                    <h3 class="carcinogen-name">Charred Meat</h3>
+                    <span class="risk-level risk-low">Low Risk</span>
+                </div>
+                <p>Cooking meat at high temperatures can create heterocyclic amines and polycyclic aromatic hydrocarbons.</p>
+                <div class="safety-bar-container">
+                    <div class="safety-bar bar-low"></div>
+                </div>
+                <div class="safety-tips">
+                    <h4>Safety Recommendations:</h4>
+                    <ul>
+                        <li>Avoid charring or burning meat</li>
+                        <li>Use lower temperature cooking methods</li>
+                        <li>Marinate meat before grilling</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREVENTION -->
+        <section id="prevention" style="margin-top:2rem">
+            <h2>Prevention & Healthy Lifestyle</h2>
+            <p>While not all cancers can be prevented, research suggests that up to 40% of cancers could be prevented through healthy lifestyle choices and environmental changes.</p>
+            
+            <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:1rem;">
+                <div class="card">
+                    <h3>Healthy Eating Habits</h3>
+                    <ul>
+                        <li>Eat plenty of fruits and vegetables (aim for 5+ servings daily)</li>
+                        <li>Choose whole grains over refined grains</li>
+                        <li>Limit processed and red meats</li>
+                        <li>Reduce sugar and salt intake</li>
+                        <li>Maintain a healthy weight</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Physical Activity</h3>
+                    <ul>
+                        <li>Aim for at least 150 minutes of moderate exercise weekly</li>
+                        <li>Include strength training twice weekly</li>
+                        <li>Reduce sedentary time - stand up and move regularly</li>
+                        <li>Find activities you enjoy to maintain consistency</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUPPORT SECTION -->
+        <section class="support-section">
+            <h2>Support for Those Affected by Cancer</h2>
+            <p>A cancer diagnosis affects not just the patient but also their family and friends. Support systems are crucial for emotional well-being and treatment success.</p>
+            
+            <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:1rem;">
+                <div class="card">
+                    <h3>Emotional Support</h3>
+                    <ul>
+                        <li>Join support groups (in-person or online)</li>
+                        <li>Consider counseling or therapy</li>
+                        <li>Practice stress-reduction techniques</li>
+                        <li>Communicate openly with loved ones</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Practical Support</h3>
+                    <ul>
+                        <li>Help with daily tasks and appointments</li>
+                        <li>Assist with medical information organization</li>
+                        <li>Provide transportation to treatments</li>
+                        <li>Help with meal preparation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES -->
+        <section id="resources" style="margin-top:2rem">
+            <h2>Trusted Resources & Further Information</h2>
+            <p>For accurate, up-to-date information about cancer prevention, detection, and treatment, consult these reputable organizations:</p>
+            
+            <div class="grid" style="margin-top:1rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
+                <a class="card" href="https://www.who.int/health-topics/cancer" target="_blank">
+                    <h3>World Health Organization — Cancer</h3>
+                    <p>Global cancer prevention initiatives, research, and awareness campaigns.</p>
+                </a>
+                <a class="card" href="https://www.cdc.gov/cancer" target="_blank">
+                    <h3>CDC — Cancer Control</h3>
+                    <p>Evidence-based research, prevention strategies, and screening guidelines.</p>
+                </a>
+                <a class="card" href="https://www.cancer.org" target="_blank">
+                    <h3>American Cancer Society</h3>
+                    <p>Comprehensive cancer information, support services, and research.</p>
+                </a>
+                <a class="card" href="https://www.iarc.who.int" target="_blank">
+                    <h3>International Agency for Research on Cancer</h3>
+                    <p>Global carcinogen evaluation, cancer data, and research publications.</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap">
+            <small>&copy; <span id="year"></span> Community Cancer Awareness • Learn · Prevent · Protect · Support</small>
+            <p><small>This information is for educational purposes only. Consult healthcare professionals for medical advice.</small></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+            });
+        }, { threshold: 0.15 });
+        cards.forEach(card => observer.observe(card));
+
+        const searchInput = document.getElementById('search-bar');
+        const allCards = document.querySelectorAll('#causes-grid .card');
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const q = searchInput.value.toLowerCase();
+                allCards.forEach(card => {
+                    const text = card.textContent.toLowerCase();
+                    card.style.display = text.includes(q) ? 'block' : 'none';
+                });
+            });
+        }
+
+        // Animate safety bars on scroll
+        const safetyBars = document.querySelectorAll('.safety-bar');
+        const barObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    // Reset width to 0 then animate to full width
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        if (bar.classList.contains('bar-high')) {
+                            bar.style.width = '90%';
+                        } else if (bar.classList.contains('bar-medium')) {
+                            bar.style.width = '60%';
+                        } else if (bar.classList.contains('bar-low')) {
+                            bar.style.width = '30%';
+                        }
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        safetyBars.forEach(bar => barObserver.observe(bar));
+    </script>
+</body>
+
+</html>
