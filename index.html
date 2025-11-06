@@ -4,9 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description" content="Comprehensive cancer awareness resource with prevention tips, types of cancer, causes, and support resources.">
+    <meta name="description"
+        content="Comprehensive cancer awareness resource with prevention tips, types of cancer, causes, and support resources.">
     <title>Cancer Awareness — Learn · Prevent · Protect · Support</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -62,7 +64,7 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 100;
         }
 
         .header-inner {
@@ -89,6 +91,7 @@
             font-size: .95rem;
         }
 
+        /* DESKTOP NAV */
         nav.main-nav {
             display: flex;
             background: var(--accent-light);
@@ -108,6 +111,93 @@
         nav.main-nav a:hover {
             background: var(--accent);
             color: white;
+        }
+
+        /* MOBILE HAMBURGER MENU */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+            width: 40px;
+            height: 40px;
+            justify-content: center;
+            align-items: center;
+            background: var(--accent-light);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover {
+            background: var(--accent);
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2.5px;
+            background: var(--accent);
+            margin: 2.5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            transform-origin: center;
+        }
+
+        .hamburger:hover span {
+            background: white;
+        }
+
+        /* Hamburger to X Animation */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 99;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--accent);
+            border-bottom: 1px solid var(--accent-light);
+            width: 100%;
+            max-width: 300px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background: var(--accent-light);
+            color: var(--accent);
         }
 
         /* HERO */
@@ -375,15 +465,21 @@
             /* adjust based on header height */
         }
 
-        @media (max-width: 750px) {
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
             .hero {
                 flex-direction: column;
                 text-align: center;
             }
 
+            /* Hide desktop nav on mobile */
             nav.main-nav {
-                flex-wrap: wrap;
-                justify-content: center;
+                display: none;
+            }
+
+            /* Show hamburger menu on mobile */
+            .hamburger {
+                display: flex;
             }
 
             .stats {
@@ -397,6 +493,12 @@
 
             .risk-level {
                 margin-top: 0.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-nav {
+                display: none !important;
             }
         }
     </style>
@@ -413,6 +515,8 @@
                     <p class="tag">Learn · Prevent · Protect · Support</p>
                 </div>
             </div>
+
+            <!-- Desktop Navigation -->
             <nav class="main-nav">
                 <a href="#what">What is Cancer</a>
                 <a href="#types">Cancer Types</a>
@@ -422,8 +526,26 @@
                 <a href="#prevention">Prevention</a>
                 <a href="#resources">Resources</a>
             </nav>
+
+            <!-- Mobile Hamburger Menu -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#what" class="mobile-nav-link">What is Cancer</a>
+        <a href="#types" class="mobile-nav-link">Cancer Types</a>
+        <a href="#symptoms" class="mobile-nav-link">Symptoms</a>
+        <a href="#causes" class="mobile-nav-link">Causes</a>
+        <a href="#carcinogens" class="mobile-nav-link">Carcinogens</a>
+        <a href="#prevention" class="mobile-nav-link">Prevention</a>
+        <a href="#resources" class="mobile-nav-link">Resources</a>
+    </div>
 
     <main class="wrap">
 
@@ -431,15 +553,21 @@
             <div style="flex:1">
                 <h2>Understanding Cancer</h2>
                 <p>
-                    Cancer is a complex group of diseases characterized by the uncontrolled growth and spread of abnormal cells. These cells can form tumors, invade nearby tissues, and spread to other parts of the body through the blood and lymph systems (a process called metastasis).
+                    Cancer is a complex group of diseases characterized by the uncontrolled growth and spread of
+                    abnormal cells. These cells can form tumors, invade nearby tissues, and spread to other parts of the
+                    body through the blood and lymph systems (a process called metastasis).
                 </p>
                 <p>
-                    Cancer can start in almost any tissue or organ of the body. While not all tumors are cancerous (malignant), malignant tumors can invade and destroy healthy tissues. Early detection through screening and adopting healthy lifestyle habits significantly improve survival rates and quality of life.
+                    Cancer can start in almost any tissue or organ of the body. While not all tumors are cancerous
+                    (malignant), malignant tumors can invade and destroy healthy tissues. Early detection through
+                    screening and adopting healthy lifestyle habits significantly improve survival rates and quality of
+                    life.
                 </p>
-                <p style="color:var(--accent);font-weight:600;">Knowledge, awareness, and regular screening save lives.</p>
+                <p style="color:var(--accent);font-weight:600;">Knowledge, awareness, and regular screening save lives.
+                </p>
             </div>
             <div>
-                <img src="./cancer-cell.jpg"
+                <img src="https://media.istockphoto.com/id/982115490/photo/cells-cancer-cells-or-lymphocytes.jpg?s=612x612&w=0&k=20&c=qZazokYId9-ZGOBQjYLOujDKjVtL33SalUdkKdfumDE="
                     alt="Cancer cells under microscope">
             </div>
         </section>
@@ -462,38 +590,47 @@
         <!-- TYPES SECTION -->
         <section id="types" style="margin-top:2rem">
             <h2>Types of Cancer</h2>
-            <p>Cancers are typically named for the organs or tissues where they form. Here are some of the most common types:</p>
-            
+            <p>Cancers are typically named for the organs or tissues where they form. Here are some of the most common
+                types:</p>
+
             <div class="important-note">
                 <h3>Important Note</h3>
-                <p>This list provides general information about cancer types. If you have concerns about any symptoms or risk factors, please consult with a healthcare professional for personalized medical advice.</p>
+                <p>This list provides general information about cancer types. If you have concerns about any symptoms or
+                    risk factors, please consult with a healthcare professional for personalized medical advice.</p>
             </div>
-            
+
             <div class="types grid" style="margin-top:1rem">
 
                 <article class="card">
                     <h3>Breast Cancer</h3>
-                    <p>Develops in breast tissue, most commonly in the ducts that carry milk to the nipple or the glands that produce milk. Includes invasive ductal carcinoma, invasive lobular carcinoma, and inflammatory breast cancer.</p>
+                    <p>Develops in breast tissue, most commonly in the ducts that carry milk to the nipple or the glands
+                        that produce milk. Includes invasive ductal carcinoma, invasive lobular carcinoma, and
+                        inflammatory breast cancer.</p>
                 </article>
                 <article class="card">
                     <h3>Lung Cancer</h3>
-                    <p>Begins in the lungs and is strongly linked to smoking. The two main types are non-small cell lung cancer (more common) and small cell lung cancer (more aggressive).</p>
+                    <p>Begins in the lungs and is strongly linked to smoking. The two main types are non-small cell lung
+                        cancer (more common) and small cell lung cancer (more aggressive).</p>
                 </article>
                 <article class="card">
                     <h3>Prostate Cancer</h3>
-                    <p>Develops in the prostate gland in men. It's often slow-growing but can be aggressive in some cases. Regular screening is important for early detection.</p>
+                    <p>Develops in the prostate gland in men. It's often slow-growing but can be aggressive in some
+                        cases. Regular screening is important for early detection.</p>
                 </article>
                 <article class="card">
                     <h3>Colorectal Cancer</h3>
-                    <p>Starts in the colon or rectum, often developing from precancerous polyps. Screening tests can find and remove polyps before they become cancerous.</p>
+                    <p>Starts in the colon or rectum, often developing from precancerous polyps. Screening tests can
+                        find and remove polyps before they become cancerous.</p>
                 </article>
                 <article class="card">
                     <h3>Skin Cancer</h3>
-                    <p>The most common type of cancer. Includes basal cell carcinoma, squamous cell carcinoma, and melanoma (the most dangerous form).</p>
+                    <p>The most common type of cancer. Includes basal cell carcinoma, squamous cell carcinoma, and
+                        melanoma (the most dangerous form).</p>
                 </article>
                 <article class="card">
                     <h3>Blood Cancers</h3>
-                    <p>Includes leukemia (cancer of blood-forming tissues), lymphoma (lymph system cancer), and multiple myeloma (plasma cell cancer).</p>
+                    <p>Includes leukemia (cancer of blood-forming tissues), lymphoma (lymph system cancer), and multiple
+                        myeloma (plasma cell cancer).</p>
                 </article>
 
             </div>
@@ -502,24 +639,29 @@
         <!-- SYMPTOMS SECTION -->
         <section id="symptoms" style="margin-top:2rem">
             <h2>Common Cancer Symptoms</h2>
-            <p>While these symptoms can be caused by conditions other than cancer, it's important to consult a healthcare professional if you experience any persistent or unusual changes in your body.</p>
-            
+            <p>While these symptoms can be caused by conditions other than cancer, it's important to consult a
+                healthcare professional if you experience any persistent or unusual changes in your body.</p>
+
             <div class="symptoms-grid" style="margin-top:1rem">
                 <div class="symptom-card">
                     <h4>Unexplained Weight Loss</h4>
-                    <p>Losing 10 pounds or more without trying could be a sign of various cancers, especially those of the pancreas, stomach, esophagus, or lung.</p>
+                    <p>Losing 10 pounds or more without trying could be a sign of various cancers, especially those of
+                        the pancreas, stomach, esophagus, or lung.</p>
                 </div>
                 <div class="symptom-card">
                     <h4>Fatigue</h4>
-                    <p>Extreme tiredness that doesn't improve with rest can be an early sign of some cancers, like leukemia or cancers that cause blood loss.</p>
+                    <p>Extreme tiredness that doesn't improve with rest can be an early sign of some cancers, like
+                        leukemia or cancers that cause blood loss.</p>
                 </div>
                 <div class="symptom-card">
                     <h4>Persistent Pain</h4>
-                    <p>Ongoing pain without a clear cause that doesn't go away may signal bone, brain, or other cancers.</p>
+                    <p>Ongoing pain without a clear cause that doesn't go away may signal bone, brain, or other cancers.
+                    </p>
                 </div>
                 <div class="symptom-card">
                     <h4>Skin Changes</h4>
-                    <p>Any changes in size, shape, or color of moles or other skin spots, or new skin growths should be examined.</p>
+                    <p>Any changes in size, shape, or color of moles or other skin spots, or new skin growths should be
+                        examined.</p>
                 </div>
             </div>
         </section>
@@ -527,26 +669,33 @@
         <!-- CAUSES -->
         <section id="causes" style="margin-top:2rem">
             <h2>Causes and Risk Factors</h2>
-            <p>Cancer develops due to changes (mutations) in DNA that control cell function. These changes can be inherited or caused by exposure to carcinogens. Search below to filter causes or keywords like "tobacco", "alcohol", "radiation", etc.</p>
-            
+            <p>Cancer develops due to changes (mutations) in DNA that control cell function. These changes can be
+                inherited or caused by exposure to carcinogens. Search below to filter causes or keywords like
+                "tobacco", "alcohol", "radiation", etc.</p>
+
             <input type="search" id="search-bar" placeholder="🔍 Search cancer causes...">
             <div class="grid" id="causes-grid"
                 style="margin-top:1rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
                 <article class="card">
                     <h3>Tobacco Use</h3>
-                    <p>The leading preventable cause of cancer worldwide. Smoking causes lung, throat, mouth, pancreatic, bladder, and many other cancers. Avoid all forms of tobacco and secondhand smoke.</p>
+                    <p>The leading preventable cause of cancer worldwide. Smoking causes lung, throat, mouth,
+                        pancreatic, bladder, and many other cancers. Avoid all forms of tobacco and secondhand smoke.
+                    </p>
                 </article>
                 <article class="card">
                     <h3>Alcohol Consumption</h3>
-                    <p>Linked to breast, liver, colorectal, esophageal, and head and neck cancers. The risk increases with the amount consumed. Limit alcohol intake or avoid it completely.</p>
+                    <p>Linked to breast, liver, colorectal, esophageal, and head and neck cancers. The risk increases
+                        with the amount consumed. Limit alcohol intake or avoid it completely.</p>
                 </article>
                 <article class="card">
                     <h3>UV Radiation</h3>
-                    <p>Excessive exposure to ultraviolet radiation from the sun or tanning beds significantly increases skin cancer risk. Use SPF 30+ sunscreen, wear protective clothing, and avoid peak sun hours.</p>
+                    <p>Excessive exposure to ultraviolet radiation from the sun or tanning beds significantly increases
+                        skin cancer risk. Use SPF 30+ sunscreen, wear protective clothing, and avoid peak sun hours.</p>
                 </article>
                 <article class="card">
                     <h3>Unhealthy Diet</h3>
-                    <p>Diets high in processed meats, red meat, and low in fruits and vegetables may increase cancer risk. Focus on a balanced diet rich in plant-based foods.</p>
+                    <p>Diets high in processed meats, red meat, and low in fruits and vegetables may increase cancer
+                        risk. Focus on a balanced diet rich in plant-based foods.</p>
                 </article>
             </div>
         </section>
@@ -554,19 +703,23 @@
         <!-- CARCINOGENIC MATERIALS SECTION -->
         <section id="carcinogens" class="carcinogen-section">
             <h2>Carcinogenic Materials & Safety Levels</h2>
-            <p>Understanding the carcinogenic potential of common materials can help you make safer choices. The bars below represent relative risk levels based on scientific evidence.</p>
-            
+            <p>Understanding the carcinogenic potential of common materials can help you make safer choices. The bars
+                below represent relative risk levels based on scientific evidence.</p>
+
             <div class="important-note">
                 <h3>Understanding Risk Levels</h3>
-                <p>Risk levels are based on the International Agency for Research on Cancer (IARC) classifications and represent the strength of evidence linking a substance to cancer, not necessarily the level of risk in everyday exposure. Always follow safety guidelines for any potentially hazardous materials.</p>
+                <p>Risk levels are based on the International Agency for Research on Cancer (IARC) classifications and
+                    represent the strength of evidence linking a substance to cancer, not necessarily the level of risk
+                    in everyday exposure. Always follow safety guidelines for any potentially hazardous materials.</p>
             </div>
-            
+
             <div class="carcinogen-card">
                 <div class="carcinogen-header">
                     <h3 class="carcinogen-name">Tobacco Smoke</h3>
                     <span class="risk-level risk-high">High Risk</span>
                 </div>
-                <p>Contains at least 70 known carcinogens. Directly linked to lung, throat, mouth, and many other cancers.</p>
+                <p>Contains at least 70 known carcinogens. Directly linked to lung, throat, mouth, and many other
+                    cancers.</p>
                 <div class="safety-bar-container">
                     <div class="safety-bar bar-high"></div>
                 </div>
@@ -579,7 +732,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="carcinogen-card">
                 <div class="carcinogen-header">
                     <h3 class="carcinogen-name">Asbestos</h3>
@@ -598,7 +751,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="carcinogen-card">
                 <div class="carcinogen-header">
                     <h3 class="carcinogen-name">Processed Meats</h3>
@@ -617,7 +770,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="carcinogen-card">
                 <div class="carcinogen-header">
                     <h3 class="carcinogen-name">Alcohol</h3>
@@ -636,13 +789,14 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="carcinogen-card">
                 <div class="carcinogen-header">
                     <h3 class="carcinogen-name">BPA (Bisphenol A)</h3>
                     <span class="risk-level risk-low">Low Risk</span>
                 </div>
-                <p>Found in some plastics and food can linings. Potential endocrine disruptor with limited evidence of carcinogenicity.</p>
+                <p>Found in some plastics and food can linings. Potential endocrine disruptor with limited evidence of
+                    carcinogenicity.</p>
                 <div class="safety-bar-container">
                     <div class="safety-bar bar-low"></div>
                 </div>
@@ -655,13 +809,14 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="carcinogen-card">
                 <div class="carcinogen-header">
                     <h3 class="carcinogen-name">Charred Meat</h3>
                     <span class="risk-level risk-low">Low Risk</span>
                 </div>
-                <p>Cooking meat at high temperatures can create heterocyclic amines and polycyclic aromatic hydrocarbons.</p>
+                <p>Cooking meat at high temperatures can create heterocyclic amines and polycyclic aromatic
+                    hydrocarbons.</p>
                 <div class="safety-bar-container">
                     <div class="safety-bar bar-low"></div>
                 </div>
@@ -679,8 +834,9 @@
         <!-- PREVENTION -->
         <section id="prevention" style="margin-top:2rem">
             <h2>Prevention & Healthy Lifestyle</h2>
-            <p>While not all cancers can be prevented, research suggests that up to 40% of cancers could be prevented through healthy lifestyle choices and environmental changes.</p>
-            
+            <p>While not all cancers can be prevented, research suggests that up to 40% of cancers could be prevented
+                through healthy lifestyle choices and environmental changes.</p>
+
             <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:1rem;">
                 <div class="card">
                     <h3>Healthy Eating Habits</h3>
@@ -707,8 +863,9 @@
         <!-- SUPPORT SECTION -->
         <section class="support-section">
             <h2>Support for Those Affected by Cancer</h2>
-            <p>A cancer diagnosis affects not just the patient but also their family and friends. Support systems are crucial for emotional well-being and treatment success.</p>
-            
+            <p>A cancer diagnosis affects not just the patient but also their family and friends. Support systems are
+                crucial for emotional well-being and treatment success.</p>
+
             <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:1rem;">
                 <div class="card">
                     <h3>Emotional Support</h3>
@@ -734,8 +891,9 @@
         <!-- RESOURCES -->
         <section id="resources" style="margin-top:2rem">
             <h2>Trusted Resources & Further Information</h2>
-            <p>For accurate, up-to-date information about cancer prevention, detection, and treatment, consult these reputable organizations:</p>
-            
+            <p>For accurate, up-to-date information about cancer prevention, detection, and treatment, consult these
+                reputable organizations:</p>
+
             <div class="grid" style="margin-top:1rem; grid-template-columns:repeat(auto-fit,minmax(250px,1fr));">
                 <a class="card" href="https://www.who.int/health-topics/cancer" target="_blank">
                     <h3>World Health Organization — Cancer</h3>
@@ -760,14 +918,53 @@
 
     <footer class="site-footer">
         <div class="wrap">
-            <small>&copy; <span id="year"></span> Community Cancer Awareness • Learn · Prevent · Protect · Support</small>
-            <p><small>This information is for educational purposes only. Consult healthcare professionals for medical advice.</small></p>
+            <small>&copy; <span id="year"></span> Community Cancer Awareness • Learn · Prevent · Protect ·
+                Support</small>
+            <p><small>This information is for educational purposes only. Consult healthcare professionals for medical
+                    advice.</small></p>
         </div>
     </footer>
 
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
+        // Mobile menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+
+            if (mobileNav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+            } else {
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Close menu when a link is clicked
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close menu when clicking outside
+        mobileNav.addEventListener('click', (e) => {
+            if (e.target === mobileNav) {
+                hamburger.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Card animation
         const cards = document.querySelectorAll('.card');
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -776,6 +973,7 @@
         }, { threshold: 0.15 });
         cards.forEach(card => observer.observe(card));
 
+        // Search functionality
         const searchInput = document.getElementById('search-bar');
         const allCards = document.querySelectorAll('#causes-grid .card');
         if (searchInput) {
@@ -808,7 +1006,7 @@
                 }
             });
         }, { threshold: 0.5 });
-        
+
         safetyBars.forEach(bar => barObserver.observe(bar));
     </script>
 </body>
